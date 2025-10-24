@@ -1,0 +1,32 @@
+modLoader="javafml"
+loaderVersion="[4,)"
+license="Not specified"
+
+[[mods]]
+modId="create_netherless_redux"
+version="1.0.0"
+displayName="Create: Netherless Redux"
+displayURL=""
+credits=""
+description="My personal take on Create: Netherless, ported to NeoForge 1.21.1!"
+authors="OrcaABXY"
+
+[[dependencies.create_netherless_redux]]
+    modId="neoforge"
+    type="required"
+    versionRange="[21.1.176,)"
+    ordering="AFTER"
+    side="BOTH"
+
+[[dependencies.create_netherless_redux]]
+    modId="minecraft"
+    type="required"
+    versionRange="[1.21.1]"
+    ordering="AFTER"
+    side="BOTH"
+[[dependencies.create_netherless_redux]]
+    modId="create"
+    type="required"
+    versionRange="[6.0.6,)"
+    ordering="NONE"
+    side="BOTH"
