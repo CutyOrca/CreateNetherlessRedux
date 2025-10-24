@@ -1,0 +1,61 @@
+plugins {
+    id 'eclipse'
+    id 'net.neoforged.moddev' version '2.0.91'
+}
+
+version = '1.0.0'
+base.archivesName = "create_netherless_redux"
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+
+neoForge {
+    version = "21.1.176"
+
+    runs {
+        client {
+            client()
+
+            def mcreatorJvmOptions = System.getenv('MCREATOR_JVM_OPTIONS')
+            if (mcreatorJvmOptions) {
+                mcreatorJvmOptions.split("\\s+").findAll { it.trim() }.each { arg ->
+                    jvmArgument(arg)
+                }
+            }
+        }
+        server {
+            server()
+        }
+
+        configureEach {
+            systemProperty 'forge.logging.markers', 'REGISTRIES'
+            logLevel = org.slf4j.event.Level.DEBUG
+        }
+    }
+
+    mods {
+        mcreator {
+            sourceSet sourceSets.main
+        }
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
+}
+repositories {
+    maven { url = "https://maven.createmod.net/" } // for Create
+    maven { url = "https://maven.ithundxr.dev/snapshots" } // Registrate
+    maven { url = "https://maven.tterrag.com/" } // Honestly idk what this is
+    maven { url = "https://github.com"} // Create Crafts & Additions
+}
+dependencies {
+    // Create mod as a compile-time dependency
+    implementation("com.simibubi.create:create-${minecraft_version}:${create_version}:slim") { transitive = false }
+    implementation("com.tterrag.registrate:Registrate:${registrate_version}")
+    implementation("com.tterrag.registrate:Registrate:${registrate_version}")
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation("net.createmod.ponder:Ponder-NeoForge-${minecraft_version}:${ponder_version}")
+
+    // Include Create when running the dev environment
+    runtimeOnly("com.simibubi.create:create-${minecraft_version}:${create_version}:slim") { transitive = false }
+}
